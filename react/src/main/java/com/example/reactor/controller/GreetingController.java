@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
@@ -48,10 +45,16 @@ public class GreetingController {
     }
 
     @PostMapping("/saveFile")
-    public void saveFile(@RequestBody byte[] file) {
-        String string = new String(file, StandardCharsets.UTF_8);
-        List<String> list = Arrays.asList(string.split("\n"));
-
-        list.forEach(System.out::println);
+    public void saveFile(@RequestBody byte[] body) {
+        File file = new File("testfile");
+        try (FileOutputStream outputStream = new FileOutputStream(file)) {
+            outputStream.write(body);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+//        String string = new String(file, StandardCharsets.UTF_8);
+//        List<String> list = Arrays.asList(string.split("\n"));
+//
+//        list.forEach(System.out::println);
     }
 }
