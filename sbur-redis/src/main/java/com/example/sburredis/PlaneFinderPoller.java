@@ -11,28 +11,25 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class PlaneFinderPoller {
     private WebClient client = WebClient.create("http://localhost:7634/aircraft");
-    private final RedisOperations<String, AirCraft> redisOperations;
+    private final AircraftRepository aircraftRepository;
     private final RedisConnectionFactory factory;
 
-    public PlaneFinderPoller(RedisOperations<String, AirCraft> redisOperations, RedisConnectionFactory factory) {
-        this.redisOperations = redisOperations;
+    public PlaneFinderPoller(AircraftRepository aircraftRepository, RedisConnectionFactory factory) {
+        this.aircraftRepository = aircraftRepository;
         this.factory = factory;
     }
 
     @Scheduled(fixedRate = 1000)
     private void pollPlanes() {
-        factory.getConnection().serverCommands().flushDb();
+//        factory.getConnection().serverCommands().flushDb();
 
         client.get()
                 .retrieve()
                 .bodyToFlux(AirCraft.class)
                 .filter(airCraft -> !airCraft.getReg().isEmpty())
                 .toStream()
-                .forEach(airCraft -> redisOperations.opsForValue().set(airCraft.getReg(), airCraft));
+                .forEach(aircraftRepository::save);
 
-        redisOperations.opsForValue()
-                .getOperations()
-                .keys("*")
-                .forEach(airCraftKey -> System.out.println(redisOperations.opsForValue().get(airCraftKey)));
+        aircraftRepository.findAll().forEach(System.out::println);
     }
 }

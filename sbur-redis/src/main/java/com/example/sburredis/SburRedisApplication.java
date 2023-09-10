@@ -15,17 +15,4 @@ public class SburRedisApplication {
     public static void main(String[] args) {
         SpringApplication.run(SburRedisApplication.class, args);
     }
-
-    @Bean
-    public RedisOperations<String, AirCraft> redisOperations(RedisConnectionFactory factory) {
-        RedisTemplate<String, AirCraft> template = new RedisTemplate<>();
-        
-        Jackson2JsonRedisSerializer<AirCraft> serializer = new Jackson2JsonRedisSerializer<>(AirCraft.class);
-        template.setConnectionFactory(factory);
-        template.setDefaultSerializer(serializer);
-        template.setKeySerializer(new StringRedisSerializer());
-
-        return template;
-    }
-
 }
