@@ -1,13 +1,13 @@
-package com.example
+package com.example.mongoapp
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class KotlinAppApplicationTests {
+class MongoAppApplicationTests {
 
-	@Test
-	fun contextLoads() {
-	}
+    @Test
+    fun contextLoads() {
+    }
 
 }

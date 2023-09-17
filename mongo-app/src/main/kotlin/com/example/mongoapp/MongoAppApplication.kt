@@ -1,12 +1,11 @@
-package com.example
+package com.example.mongoapp
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class KotlinAppApplication
+class MongoAppApplication
 
 fun main(args: Array<String>) {
-	println("Hello World")
-	runApplication<KotlinAppApplication>(*args)
+    runApplication<MongoAppApplication>(*args)
 }
