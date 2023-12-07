@@ -13,7 +13,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class AirCraft {
+public class Aircraft {
     @Id
     private Long id;
     private String callsign, squawk, reg, flightno, route, type, category;

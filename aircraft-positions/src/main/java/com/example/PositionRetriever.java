@@ -17,13 +17,13 @@ public class PositionRetriever {
     private final WebSocketHandler handler;
 
     @Bean
-    Consumer<List<AirCraft>> retrieveAircraftPositions() {
+    Consumer<List<Aircraft>> retrieveAircraftPositions() {
         return acList -> {
             repo.deleteAll();
 
             repo.saveAll(acList);
 
-            repo.findAll().forEach(System.out::println);
+//            repo.findAll().forEach(System.out::println);
             sendPositions();
         };
     }
